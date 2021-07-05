@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫雷小游戏</title>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/game.js"></script>
+    <style>
+        .game td{
+            width: 31px;
+            height: 34px;
+            font-size: 25px;
+        }
+        /* .game td .plate{
+            height: 31px;
+        } */
+        .iconfont{
+            font-size: 25px !important;
+        }
+        #iconfont{
+            font-size: 40px !important;
+        }
+        header{
+            height: 80px;
+        }
+        .game td .plate,.game td .plate1,.game td .plate2{
+            line-height: 32px;
+        }
+        /* td.item{
+            animation-duration: 4s;
+        } */
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <div class="time">
+                <img src="../img/02.png">
+                <span>
+                    <span id="minute">00</span>
+                    :
+                    <span id="second">00</span>
+                </span>
+            </div>
+            <div class="number">
+                <img src="../img/03.png">
+                <span id="numL">00</span>
+            </div>
+        </div>
+    </header>
+    <table class="game" cellspacing='4'>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+       <tr>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+           <td class="item" value="0">
+               <div class="plate"></div>
+           </td>
+       </tr>
+    </table>
+    <div class="Mantle">
+        <div class="box">
+            <h2>Game over</h2>
+            <div class="btn clearfix">
+                <a href="">
+                    <i class="iconfont icon-refresh" id="iconfont"></i>
+                    再来一局
+                </a>
+                <a href="../index.html">
+                    <i class="iconfont icon-caidan" id="iconfont"></i>
+                    返回菜单
+                </a>
+            </div>
+        </div> 
+    </div>
+    <div class="WinMantle">
+        <div class="box">
+            <h2>You Win</h2>
+            <div class="btn clearfix">
+                <a href="">
+                    <i class="iconfont icon-refresh" id="iconfont"></i>
+                    再来一局
+                </a>
+                <a href="../index.html">
+                    <i class="iconfont icon-caidan" id="iconfont"></i>
+                    返回菜单
+                </a>
+            </div>
+        </div>
+    </div>
+    <a href="../index.html" class="return iconfont icon-caidan"></a>
+    <script>
+        gameStart.init(99);
+        randomAnim();
+    </script>
+</body>
+</html>

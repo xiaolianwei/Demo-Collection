@@ -1,149 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>贪吃蛇-小游戏</title>
-    <script src="js/index.js"></script>
-    <style>
-    *{padding:0;margin:0;}
-    body,html{
-        width: 100%;
-        height: 100%;
-        background-color: #272323;
-        overflow: hidden;
-    }
-    h2{
-        text-align: center;
-        color: #FFC400;
-        padding: 20px 0;
-    }
-    #start,.again{
-        width: 600px;
-        height: 70px;
-        border: 2px solid #FFC400;
-        border-radius: 10px;
-        text-align: center;
-        line-height: 70px;
-        color: #FFC400;
-        position: absolute;
-        left: 50%;
-        top: 320px;
-        font-size: 30px;
-        transform: translateX(-50%);
-        cursor: pointer;
-    }
-    #start:hover,.again:hover{
-        background-color: #D4A509;
-        border-color: #D4A509;
-        color: #fff;
-    }
-    #Game{
-        width: 1200px;
-        height: 600px;
-        border: 2px solid #FFC400;
-        margin: 0px auto;
-        background-color: #050505;
-        position: relative;
-        overflow: hidden;
-    }
-    #Game span.snake,#Game span.food{
-        position: absolute;
-        width: 15px;
-        height: 15px;
-        background-color: #FFC400;
-        padding: 1px;
-        box-sizing: border-box;
-        background-clip: content-box;
-    }
-    #Game span.snake.head{
-        background-color: #fff;
-    }
-    #over{
-        color: #FFC400;
-        position: absolute;
-        width: 100%;
-        top: 200px;
-        transition: all 1s;
-        opacity: 0;
-        display: none;
-    }
-    #over>h2{
-        font-size: 100px;
-        font-weight: 700;
-        font-style: italic;
-        text-align: center;
-    }
-    #over>.again{
-        display: inline-block;
-        top: 250px;
-    }
-    h2>div{
-        display: inline-block;
-        width: 200px;
-        margin-right: 50px;
-    }
-    .Tips{
-        color: #FFC400;
-        position: absolute;
-        width: 1204px;
-        top: 690px;
-        left: 50%;
-        background-color: #050505;
-        transform: translateX(-50%);
-        box-sizing: border-box;
-        padding-left: 20px;
-    }
-    .Tips>p{
-        margin: 5px 0;
-    }
-    </style>
+	<meta charset="UTF-8">
+	<meta name='Keywords' content=''>
+	<meta name='Description' content=''>
+	<title>扫雷小游戏</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_1929375_ul2yue2za8a.css">
+	<style>
+		*{padding:0;margin: 0;}
+		body {
+			background-color: #282C34;
+			
+			padding-top: 30px;
+		}
+		.difficulty li{
+			width: 610px;
+			height: 100px;
+			margin:20px auto;
+			list-style: none;
+			border-radius: 10px;
+			position: relative;
+			left: -85%;
+			
+		}
+		.difficulty li a{
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			padding-left: 380px;
+			text-decoration: none;
+			position: relative;
+			box-sizing: border-box;
+		}
+		.difficulty li a i{
+			color:white;
+			font-size: 70px;
+			position: absolute;
+			top:50%;
+			transform: translateY(-50%);
+			left: 40px;
+		}
+		.difficulty li a span{
+			color: white;
+			line-height: 100px;
+			font-size: 40px;
+		}
+		.simple{
+			background-color: #7DB600;
+			box-shadow: 0px 6px 0 0 #4B6D00;
+			animation:move 1s forwards;
+		}
+		.secondary{
+			background-color: #E98C0C;
+			box-shadow: 0px 6px 0 0 #975803;
+			animation:move 1s forwards;
+			animation-delay: 0.3s;
+		}
+		.expert{
+			background-color: #DD3C24;
+			box-shadow: 0px 6px 0 0 #982412;
+			animation:move 1s forwards;
+			animation-delay: 0.6s;
+		}
+		@keyframes move{
+			0%{left: -85%;}
+			100%{left:0}
+		}
+	</style>
 </head>
+
 <body>
-    <h2>
-        <div>最高纪录：<span id="fraction">0</span></div>
-        <div>当前分数：<span id="current_fraction">0</span></div>
-    </h2>
-    <div id="Game">
-        <!-- <span class="snake head" index='20,15' style="left: 300px;"></span>
-        <span class="snake" index='19,15' style="left: 285px"></span>
-        <span class="snake" index='18,15' style="left: 270px;"></span> -->
-    </div>
-    <div id="start">开始游戏</div>
-    <div id="over">
-        <h2>GAME OVER</h2>
-        <span class="again">重新开始</span>
-    </div>
-    <div class="Tips">
-        <h3>操作指南</h3>
-        <p>1、点击“开始游戏”按钮启动游戏。</p>
-        <p>2、使用键盘方向键（← ↑ → ↓）键或（a w d s）来控制</p>
-        <p>3、游戏开始后，每成功吃到食物，分数加1，身体会加长一块，随着蛇身的加长，速度也会上升。</p>
-        <p>4、当蛇头跃出边界或者撞到自身时，游戏结束。请点重新开始，如果刷新页面那么最高纪录会被重置</p>
-    </div>
-    <script>
-        var oStart = document.getElementById('start'),
-            oAgain = document.getElementsByClassName('again')[0],
-            oF_max = document.getElementById('fraction'),
-            oF = document.getElementById('current_fraction'),
-            oGame = document.getElementById('Game'),
-            over = document.getElementById('over'),
-            oF_max_num;
-        oStart.onclick = function () {
-            oStart.style.display = 'none';
-            Game_start.init();
-        }
-        oAgain.onclick = function () {
-            var oSpan = oGame.getElementsByTagName('span'),
-                len = oSpan.length;
-            for(var i = 0; i < len; i++) oGame.removeChild(oSpan[0]);
-            over.style.display = 'none';
-            over.style.opacity = '0';
-            oF.innerText = '0';
-            oF_max_num = Number(oF_max.innerText);
-            Game_start.init(oF_max_num);
-        }
-        // Game_start.init();
-    </script>
+	<div style="text-align: center;">
+		<img src="./img/01.png" alt="" width="450" />
+	</div>
+	<ul class="difficulty">
+		<li class="simple">
+			<a href="game/simple.html">
+				<i class="iconfont icon-biaoqing"></i>
+				<span>简单 9x9</span>
+			</a>
+		</li>
+		<li class="secondary">
+			<a href="game/secondary.html">
+				<i class="iconfont icon-shejiao_lian_deyi_"></i>
+				<span>中等 16x16</span>
+			</a>
+		</li>
+		<li class="expert">
+			<a href="game/expert.html">
+				<i class="iconfont icon-mustache"></i>
+				<span>专家 30x16</span>
+			</a>
+		</li>
+	</ul>
 </body>
+
 </html>
