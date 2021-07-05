@@ -1,119 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="image/logo.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="turnpage/index.css">
-    <title>学生管理系统</title>
+    <title>Title</title>
+    <link href="index.css" rel="stylesheet">
 </head>
-
 <body>
-    <header>
-        <div class="logo">
-            <img src="image/logo.png" alt="">
-            <span>渡一教育</span>
-        </div>
-    </header>
-    <div class="left-menu">
-        <dl>
-            <dt>学生管理</dt>
-            <dd data-id="student-list" class="active">学生列表</dd>
-            <dd data-id="student-add">新增学生</dd>
-        </dl>
-    </div>
-    <div class="right-content">
-        <div class="student-list content show-content" id="student-list">
-            <table>
-                <thead>
-                    <tr>
-                        <th>学号</th>
-                        <th>姓名</th>
-                        <th>性别</th>
-                        <th>邮箱</th>
-                        <th>年龄</th>
-                        <th>手机号</th>
-                        <th>住址</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody id="student-body">
-                    <!-- <tr>
-                        <td>13213513</td>
-                        <td>xxx</td>
-                        <td>男</td>
-                        <td>269577@qq.com</td>
-                        <td>-53111493</td>
-                        <td>17674152705</td>
-                        <td>粉色</td>
-                        <td>
-                            <button class="btn edit">编辑</button>
-                            <button class="btn remove">删除</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1513535</td>
-                        <td>xxx</td>
-                        <td>男</td>
-                        <td>295772510@qq.com</td>
-                        <td>-153129331</td>
-                        <td>13511351222</td>
-                        <td>家父色剂</td>
-                        <td>
-                            <button class="btn edit">编辑</button>
-                            <button class="btn remove">删除</button>
-                        </td>
-                    </tr> -->
-                </tbody>
-            </table>
-            <div class="page"></div>
-            <div class="dialog">
-                <div class="dialog-content">
-                    <h3>编辑信息</h3>
-                    <form id="student-edit-form">
-                        <div><label for="add-name">姓名</label><input type="text" id="add-name" name='name'></div>
-                        <div>
-                            <label for="">性别</label>
-                            <input type="radio" name="sex" id="edit-male" value="0" checked>
-                            <label for="edit-male" class="sex">男</label>
-                            <input type="radio" name="sex" id="edit-female" value="1">
-                            <label for="edit-female" class="sex">女</label>
-                        </div>
-                        <div><label for="add-email">邮箱</label><input type="text" id="add-email" name="email"></div>
-                        <div><label for="add-number">学号</label><input type="text" id="add-number" name="sNo" readonly></div>
-                        <div><label for="add-birth">出生年</label><input type="text" id="add-birth" name="birth"></div>
-                        <div><label for="add-phone">手机号</label><input type="text" id="add-phone" name="phone"></div>
-                        <div><label for="add-address">住址</label><input type="text" id="add-address" name="address">
-                        </div>
-                        <div><label for=""></label><input type="submit" class="btn" id="edit-form-btn"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="student-add content" id="student-add">
-            <form action="" id="student-add-form">
-                <div><label for="add-name">姓名</label><input type="text" id="add-name" name='name'></div>
-                <div>
-                    <label for="">性别</label>
-                    <input type="radio" name="sex" id="sex-male" value="0" checked>
-                    <label for="sex-male" class="sex">男</label>
-                    <input type="radio" name="sex" id="sex-female" value="1">
-                    <label for="sex-female" class="sex">女</label>
-                </div>
-                <div><label for="add-email">邮箱</label><input type="text" id="add-email" name="email"></div>
-                <div><label for="add-number">学号</label><input type="text" id="add-number" name="sNo"></div>
-                <div><label for="add-birth">出生年</label><input type="text" id="add-birth" name="birth"></div>
-                <div><label for="add-phone">手机号</label><input type="text" id="add-phone" name="phone"></div>
-                <div><label for="add-address">住址</label><input type="text" id="add-address" name="address"></div>
-                <div><label for=""></label><input type="submit" id="student-add-btn" class="btn"> <input type="reset" class="btn"></div>
-            </form>
-        </div>
-    </div>
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="turnpage/index.js"></script>
-    <script src="js/index.js"></script>
-</body>
 
+    <div id="tetris">
+    </div>
+
+    <script src="index.js"></script>
+    <script src="./elements/SquareElement.js"></script>
+    <script src="./elements/SideBulgeLeftElement.js"></script>
+    <script src="./elements/SideBulgeRightElement.js"></script>
+    <script src="./elements/LightLeftElement.js"></script>
+    <script src="./elements/LightRightElement.js"></script>
+    <script src="./elements/LineElement.js"></script>
+
+    <script src="./plugins/ScoreAndNext.js"></script>
+</body>
 </html>
