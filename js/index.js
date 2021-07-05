@@ -1,144 +1,713 @@
-const oBird = document.querySelector('.bird');
-const oScore = document.querySelector('.score');
-const oEnd = document.querySelector('.end');
-const oEndScore = document.querySelector('.end .end-score');
-const oRankList = document.querySelector('.end .rank-list');
-const oReset = document.querySelector('.end .reset');
-const oStart = document.querySelector('.start');
-
-const bird = new Bird(oBird);
-const sky = new Sky(document.getElementById('game'));
-// 定义页面上的所有管道并把他们都放在数组里
-const pipeArr = new Array(7);
-const pipeArrLength = pipeArr.length;
-// 页面上最后一根管道的索引值
-let pipeLastIndex = pipeArrLength - 1;
-// 页面刷新后从sessionStorage里获取分数排名数组
-let scoreArr = getStorage();
-// 定义分数
-let score = 0;
-
-let timeId = null;
-// 在开始界面就让小鸟上下动
-bird.initMover();
-
-window.onclick = function (e) {
-  // 如果点击的是开始按钮
-  if (e.target.classList.contains('start')) {
-    e.target.classList.add('d-none');
-    oScore.classList.remove('d-none');
-    oScore.classList.add('d-block');
-    bird.state();
-    initPipe();
-    // 控制小鸟、管道和天空的移动
-    timeId = setInterval(() => {
-      // 天空移动
-      sky.move();
-      // 让小鸟移动并检测小鸟是否撞到边界
-      const result = bird.mover();
-      // 小鸟要过去的那根管道
-      const nextPipe = pipeArr[score % pipeArrLength];
-      // 边界检测和管道碰撞检测
-      if (result
-                || (Bird.left + bird.width >= nextPipe.left && bird.top <= nextPipe.upHeight)
-                || (Bird.left + bird.width >= nextPipe.left && bird.top + bird.height >= nextPipe.upHeight + 150)
-      ) {
-        over();
-      }
-      pipeArr.forEach((pipe) => {
-        const isReset = pipe.move();
-        if (isReset) {
-          pipe.reset(pipeArr[pipeLastIndex].left);
-          pipeLastIndex = ++pipeLastIndex % pipeArrLength;
+// logo动画
+var logoAnimation = {
+    data : {},
+    init : function(){
+        this.data = this.initData();
+        this.event(this.data)
+    },
+    initData : function(){
+        var oLogo = document.getElementById('logo'),
+            oLogo_img = oLogo.getElementsByClassName('logo_img')[0],
+            oLogo_text =oLogo.getElementsByClassName('logo_text')[0];
+        return {
+            oLogo : oLogo,
+            oLogo_img : oLogo_img,
+            oLogo_text : oLogo_text
         }
-      });
-      if (nextPipe.left + Pipe.width < Bird.left) {
-        oScore.innerText = ++score;
-      }
-    }, 30);
-  } else {
-    // 点击一下就让小鸟跳一下
-    bird.iSeepY = -10;
-  }
+    },
+    event : function(data){
+        var oLogo = data.oLogo,
+            oLogo_img = data.oLogo_img,
+            oLogo_text = data.oLogo_text,
+            fistTime,
+            lastTime,
+            key = false,
+            fistTimeL;
+        (function(){
+            oLogo_img.children[0].style.opacity = 0;
+            setTimeout(function(){
+                oLogo_img.children[0].src = 'images/07.gif';
+                oLogo_img.children[0].style.cssText = 'height:120px;width:auto;opacity:1';
+                oLogo_text.style.cssText = 'opacity:1;transition:all 1s 2.7s';
+            },500)
+            setTimeout(function(){
+                oLogo_img.children[0].style.opacity = 0;
+                oLogo_text.style.cssText = 'opacity:0;transition:all 0.8s';
+                setTimeout(function(){
+                    oLogo_img.children[0].src = 'images/06.png';
+                    oLogo_img.children[0].style.cssText = 'width:190px;opacity:1';
+                    setTimeout(function(){key = true},800)
+                },500)
+            },6000)
+        }())
+        oLogo.onmouseenter = function(){
+            if(key){
+                fistTime = new Date().getTime();
+                if(oLogo_img.children[0].getAttribute('src')=='images/06.png') oLogo_img.children[0].style.opacity = 0;
+                setTimeout(function(){
+                    oLogo_img.children[0].src = 'images/07.gif';
+                    oLogo_img.children[0].style.cssText = 'height:120px;width:auto;opacity:1';
+                    oLogo_text.style.cssText = 'opacity:1;transition:all 1s 2.7s';
+                },500)
+            }
+        }
+        oLogo.onmouseleave = function(){
+            if(key && fistTimeL!=fistTime){
+                key = false;
+                lastTime = new Date().getTime();
+                var time = lastTime - fistTime;
+                fistTimeL = fistTime;
+                if(time < 6000){
+                    setTimeout(function(){
+                        oLogo_img.children[0].style.opacity = 0;
+                        oLogo_text.style.cssText = 'opacity:0;transition:all 0.8s';
+                        setTimeout(function(){
+                            oLogo_img.children[0].src = 'images/06.png';
+                            oLogo_img.children[0].style.cssText = 'width:190px;opacity:1'
+                            setTimeout(function(){key = true},800)
+                        },500)
+                    },6000-time)
+                }else{
+                    oLogo_img.children[0].style.opacity = 0;
+                        oLogo_text.style.cssText = 'opacity:0;transition:all 0.8s';
+                        setTimeout(function(){
+                            oLogo_img.children[0].src = 'images/06.png';
+                            oLogo_img.children[0].style.cssText = 'width:190px;opacity:1'
+                            setTimeout(function(){key = true},800)
+                        },500)
+                }
+            }
+        }
+    }
 };
 
-// 小鸟死了之后点击重新开始的事件
-oReset.onclick = function () {
-  location.reload();
+// 轮播图区域的轮播图
+var lunbotu = {
+    data : {},
+    init: function(dom){
+        this.data = this.initData(dom);
+        this.Event(this.data);
+    },
+    initData : function (dom) {
+        var oA = dom.getElementsByTagName('a'),
+            oButton = dom.getElementsByTagName('button'),
+            oDiv = dom.getElementsByClassName('buttons')[0],
+            oImg = [];
+        for(var i = 0; i < oA.length; i++){
+            oImg.push(oA[i].getElementsByTagName('img'));
+        }
+        return {
+            oA : oA,
+            oButton : oButton,
+            oDiv : oDiv,
+            oImg : oImg
+        }
+    },
+    Event : function (data) {
+        var imgIndex = 0,
+            timeId;
+        function click(e) {
+            e = e || window.event; 
+            var lastindex = imgIndex,
+                value = e.target.getAttribute('value');
+            if(value == 'right'){
+                imgIndex = (imgIndex === data.oImg[0].length - 1) ? 0 : imgIndex+1;
+            }else{
+                imgIndex = (imgIndex === 0) ? data.oImg[0].length - 1 : imgIndex-1;
+            }
+            if(data.oImg.length === 1){
+                data.oImg[0][lastindex].style.opacity = '0';
+                data.oImg[0][imgIndex].style.opacity = '1';
+            }else{
+                for(var i = 0; i < data.oImg[0].length; i++){
+                    data.oImg[i][lastindex].style.opacity = '0';
+                    data.oImg[i][imgIndex].style.opacity = '1';
+                }
+            }
+            if(!!data.oDiv){
+                data.oDiv.children[lastindex].classList.remove('Highlight');
+                data.oDiv.children[imgIndex].classList.add('Highlight');
+            };
+            e.stopPropagation();
+        };
+        data.oButton[1].onclick = click;
+        data.oButton[0].onclick = click;
+        if(!!data.oDiv){
+            var len = data.oDiv.children.length;
+            for(var i = 0; i < len; i++){
+                (function (i){
+                    data.oDiv.children[i].onmouseenter = function () {
+                        data.oDiv.children[imgIndex].className = '';
+                        data.oDiv.children[i].className = 'Highlight';
+                        data.oImg[0][imgIndex].style.opacity = '0';
+                        data.oImg[0][i].style.opacity = '1';
+                        imgIndex = i;
+                    }
+                }(i))
+            }
+            timeId = setInterval(function(){
+                data.oButton[1].click();
+            },3000);
+            data.oA[0].onmouseenter = function () {
+                clearInterval(timeId);
+            };
+            data.oA[0].onmouseleave = function () {
+                timeId = setInterval(function(){
+                    data.oButton[1].click();
+                },3000)
+            }
+        }else{
+            timeId = setInterval(function(){
+                data.oButton[1].click();
+            },9000);
+            data.oA[0].parentNode.onmouseenter = function () {
+                clearInterval(timeId);
+            };
+            data.oA[0].parentNode.onmouseleave = function () {
+                timeId = setInterval(function(){
+                    data.oButton[1].click();
+                },9000)
+            }
+        }
+    }
 };
 
-// 如果是点击重新开始按钮后的那么在刷新页面后就直接开始游戏
-if (getStorage()) {
-  oStart.click();
+// 轮播图区域的服务
+var fuwu_Hover = {
+    data : {},
+    init : function(){
+        this.data = this.initData();
+        this.Event(this.data);
+    },
+    initData : function(){
+        var oFuwu = document.getElementById('fuwu'),
+            oLi = oFuwu.getElementsByClassName('special'),
+            oDiv = oFuwu.getElementsByClassName('fuwu_2')[0],
+            oMain = oDiv.getElementsByClassName('main')[0];
+        return {
+            oFuwu : oFuwu,
+            oLi : oLi,
+            oDiv : oDiv,
+            oMain : oMain
+        }
+    },
+    Event : function (data) {
+        var lastindex = 0,
+            key = true;
+        for(var i = 0; i < 3; i++){
+            (function(i){
+                var timeId,
+                    fistTime,
+                    lastTime;
+                data.oLi[i].onmouseenter = function (){
+                    fistTime = new Date().getTime();
+                    data.oMain.children[lastindex].style.display = 'none';
+                    data.oMain.children[i].style.display = 'inline-block';
+                    data.oLi[lastindex].classList.remove('special_hover');
+                    if(getComputedStyle(data.oDiv).top=='32px'){
+                        data.oLi[i].classList.add('special_hover');
+                    }
+                    timeId && clearTimeout(timeId);
+                    timeId = setTimeout(function(){
+                        if(key){
+                            data.oLi[i].classList.add('special_hover');
+                            data.oDiv.style.top = '32px';
+                            for (var j = 0; j < 3; j++) {
+                                data.oLi[j].style.top = '-38px';
+                            }
+                            key = false;
+                        };
+                        
+                    },500)
+                    lastindex = i;
+                }
+                data.oLi[i].onmouseleave = function () {
+                    lastTime = new Date().getTime();
+                    if(lastTime - fistTime < 500){
+                        clearTimeout(timeId);
+                    }
+                }
+                data.oDiv.children[1].onclick = function () {
+                    data.oDiv.style.top = '238px';
+                    for (var j = 0; j < 3; j++) {
+                        data.oLi[j].style.top = '0px';
+                    }
+                    data.oLi[lastindex].classList.remove('special_hover');
+                    key = true;
+                };
+                (function (){
+                    var dKey = false;
+                    function dClick(e) {
+                        if(dKey){
+                            e = e || window.event;
+                            data.oDiv.children[1].click();
+                            dKey = false;
+                           e.stopPropagation();
+                        }
+                    }
+                    data.oFuwu.onmouseenter = function(){
+                        dKey = true;
+                        document.removeEventListener('click',dClick,false)
+                    }
+                    data.oFuwu.onmouseleave = function(){
+                        document.addEventListener('click',dClick,false)
+                    }
+                }())
+                
+                
+            }(i))
+        }
+    }
 }
 
-// 当小鸟死了需要执行的内容
-function over() {
-  clearInterval(timeId);
-  setStorage(score);
-  bird.stopFly();
+// 京东秒杀区域
+var jd_seckill = (function (){
+    var key = true;
+    function countdown(){
+        var oTime = document.querySelectorAll('#jd_seckill .countDown span.time'),
+            oHour = oTime[0].children[0],
+            oMinute = oTime[0].children[1],
+            oSecond = oTime[0].children[2],
+            timeId;
+        timeId = setInterval(function(){
+            var sNum = Number(oSecond.innerText),
+                mNum = Number(oMinute.innerText),
+                hNum = Number(oHour.innerText);
+            if(sNum === 0) {
+                if(mNum===0) {
+                    if(hNum===0){
+                        clearInterval(timeId);
+                        return;
+                    };
+                    mNum = 60;
+                    // oHour.innerText = `0${--hNum}`;
+                    oHour.innerText = '0' + --hNum;
+                }
+                sNum = 60;
+                // oMinute.innerText = ((mNum-1)<10)?`0${mNum-1}`:mNum-1;
+                oMinute.innerText = ((mNum-1)<10)?'0'+(mNum-1):mNum-1
+            }
+            // oSecond.innerText = ((sNum-1)<10)?`0${sNum-1}`:sNum-1;
+            oSecond.innerText = ((sNum-1)<10)?'0'+(sNum-1):sNum-1;
+        },1000)
+    }
+    function wufeng_lunbotu (){
+        var oTotal = document.getElementById('jd_seckill'),
+            oUl = oTotal.getElementsByClassName('wrapper')[0],
+            obtn_left = oTotal.getElementsByClassName('button_left')[0],
+            obtn_right = oTotal.getElementsByClassName('button_right')[0],
+            index = 1;
+        obtn_right.onclick = function () {
+            if(key){
+                key = false;
+                var left = parseInt(getComputedStyle(oUl).left);
+                if(left === -4000){
+                    oUl.style.transitionDuration = '0S';
+                    oUl.style.left = '0px';
+                    parseInt(getComputedStyle(oUl).width);
+                    index = 1;
+                }
+                oUl.style.transitionDuration = '.7s';
+                oUl.style.left = index * -800 + 'px';
+                console.log(index);
+                index ++;
+                setTimeout(function(){
+                    key = true
+                },700)
+            }
+        }
+        obtn_left.onclick = function () {
+            if(key){
+                key = false;
+                index --;
+                var left = parseInt(getComputedStyle(oUl).left);
+                if(left === 0){
+                    oUl.style.transitionDuration = '0S';
+                    oUl.style.left = '-4000px';
+                    parseInt(getComputedStyle(oUl).width);
+                    index = 5;
+                }
+                oUl.style.transitionDuration = '.7s';
+                oUl.style.left = index * -800 + 800 + 'px';
+                
+                setTimeout(function(){
+                    key = true
+                },700)
+            }
+        }
+    }
+    function brand () {
+        var oTotal = document.getElementById('jd_seckill'),
+            oDiv = oTotal.getElementsByClassName('seckill-brand')[0],
+            oUl = oDiv.getElementsByTagName('ul')[0],
+            oSpan = document.querySelectorAll('#jd_seckill .seckill-brand>div.ico>span'),
+            left = 0,
+            index = 0,
+            timeId;
+        timeId = setInterval(function(){
+            left = (left===0)?-180:0;
+            oUl.style.left = left + 'px';
+            oSpan[index].className = '';
+            index = index===0 ? 1 : 0;
+            oSpan[index].className = 'gaoLian';
+        },4000)
+    }
+    return function (){
+        countdown();
+        wufeng_lunbotu();
+        brand();
+    }
+}())
 
-  oScore.classList.remove('d-block');
-  oScore.classList.add('d-none');
-  oBird.classList.add('d-none');
-  oEnd.classList.remove('d-none');
-  oEnd.classList.add('d-block');
-
-  scoreArr = getStorage();
-  // 对排名进行降序排序
-  scoreArr.sort((a, b) => b.score - a.score);
-
-  oEndScore.innerText = score;
-  // 生成排名的元素
-  let template = '';
-  for (let i = 0; i < scoreArr.length; i++) {
-    // 最多只显示8个排名
-    if (i >= 8) break;
-    const scoreObj = scoreArr[i];
-    template += `
-            <li>
-                <span class="rank-degree">${i + 1}</span>
-                <span class="rank-score">${scoreObj.score}</span>
-                <span class="rank-time">${scoreObj.time}</span>
-            </li>
-        `;
-  }
-  oRankList.innerHTML = template;
+// 特价闪购
+var tejia_enter = function () {
+    var oTejia = document.getElementById('teJia_shanGo'),
+        oLi = oTejia.getElementsByTagName('li'),
+        oDiv = oTejia.querySelectorAll('.box>div'),
+        index = 0;
+    for(var i = 0; i < oLi.length; i++){
+        (function (i){
+            oLi[i].onmouseenter = function () {
+                oLi[index].classList.remove('enter');
+                oDiv[index].classList.remove('visible');
+                oLi[i].classList.add('enter');
+                oDiv[i].classList.add('visible');
+                index = i;
+            }
+        }(i))
+    }
 }
 
-// 初始化管道
-function initPipe() {
-  for (let i = 0; i < pipeArr.length; i++) {
-    const pipe = new Pipe((i + 1) * 300);
-    pipe.create();
-    pipeArr[i] = pipe;
-  }
+//商品橱窗展示
+var goods_list = {
+    data : {},
+    init : function () {
+        this.data = this.initData();
+        this.Event(this.data);
+        this.Time(this.data);
+    },
+    initData : function () {
+        var oBox = document.getElementById('haoHuo').children[0],
+            oUl  = oBox.querySelector('.goods_list>ul'),
+            oScroll = oBox.querySelector('.scroll>span');
+        return {
+            oBox : oBox,
+            oUl : oUl,
+            oScroll : oScroll
+        }
+    },
+    Event : function (data) {
+        var $this = this,
+            key = true;
+        data.oScroll.onmousedown = function (e) {
+            e = e || window.event;
+            key = false;
+            var offsetX = e.offsetX,
+                pageX = e.pageX,
+                left = parseInt(getComputedStyle(data.oScroll).left);
+            document.onmousemove = function (e) {
+                e = e || window.event;
+                var X = e.pageX - pageX + left,
+                    oUlX;
+                // oUl的移动距离 = OScroll的移动距离 * OUl的移动范围 / oScroll的移动范围
+                X = X < 0 ? 0 : X;
+                X = X > 861 ? 861 : X;
+                oUlX = X * 2000 / 861;
+                data.oScroll.style.left = X + 'px';
+                data.oUl.style.left = -oUlX + 'px';
+                e.preventDefault();
+            }
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                key = true;
+            }
+            e.preventDefault();
+        }; 
+        data.oBox.onmouseenter = function () {
+            clearInterval(data.timeId);
+        };
+        data.oBox.onmouseleave = function () {
+            data.timeId = setInterval(function (){
+                if(key) $this.timeFn($this);
+            },50)
+        }
+    },
+    Time : function (data) {
+        var $this = this;
+        // console.log(this)
+        var timeId = setInterval(function(){
+            $this.timeFn($this);
+        },50);
+        this.data.timeId = timeId;
+    },
+    timeFn : function($this){
+        var X = 1,
+            left = parseInt(getComputedStyle($this.data.oScroll).left),
+            oUlX = (left + X) * 2000 / 861;
+        if(left === 861){
+            $this.data.oScroll.style.left = '0px';
+            $this.data.oUl.style.left = '0px';
+        }else{
+            $this.data.oScroll.style.left = left + X + 'px';
+            $this.data.oUl.style.left = -oUlX + 'px';
+        }
+    },
 }
 
-// 把分数排名都存到sessionStorage里
-function setStorage(score) {
-  scoreArr = scoreArr || [];
-  const scoreObj = {
-    score,
-    time: getTime(),
-  };
-  scoreArr.push(scoreObj);
-  sessionStorage.setItem('scoreArr', JSON.stringify(scoreArr));
+// 新品首发轮播图
+var xinping_lubo = {
+    data : {},
+    init : function () {
+        this.data = this.initData();
+        this.Event(this.data);
+    },
+    initData : function () {
+        var oBox = document.getElementById('youxuan'),
+            oUl = oBox.getElementsByClassName('xinpin_ul')[0],
+            oBtn = oBox.querySelectorAll('.xinpin>button');
+        return {
+            oUl : oUl,
+            oBtn : oBtn
+        }
+    },
+    Event : function (data) {
+        var index = 1,
+            key = true,
+            $this = this
+        data.oBtn[1].onclick = function (e){
+            if(key){
+                e = e || window.event;
+                key = false;
+                setTimeout(function(){key = true},500);
+                againTime();
+                var oImg = data.oUl.children[1].children[0],
+                oText = data.oUl.children[1].children[1],
+                oUlLeft;
+                if(index === 5){
+                    data.oUl.style.transitionDuration = '0s';
+                    oImg.style.transitionDuration = '0s';
+                    oText.style.transitionDuration = '0s';
+                    data.oUl.children[1].className = 'core';
+                    data.oUl.style.left = '-41px';
+                    data.oUl.children[5].className = '';
+                    oUlLeft = parseInt(getComputedStyle(data.oUl).left);
+                    data.oUl.style.transitionDuration = '0.4s';
+                    oImg.style.transitionDuration = '0.4s';
+                    oText.style.transitionDuration = '0.4s';
+                    index = 1;
+                }else{
+                    oUlLeft = parseInt(getComputedStyle(data.oUl).left);
+                }
+                data.oUl.children[index].className = '';
+                data.oUl.children[++index].className = 'core';
+                data.oUl.style.left = oUlLeft + -134 + 'px'; 
+                e.stopPropagation()
+            }
+        }
+        data.oBtn[0].onclick = function (){
+            if(key){
+                key = false;
+                setTimeout(function(){key = true},500);
+                againTime();
+                var oImg = data.oUl.children[5].children[0],
+                    oText = data.oUl.children[5].children[1],
+                    oUlLeft;
+                if(index === 1){
+                    data.oUl.style.transitionDuration = '0s';
+                    oImg.style.transitionDuration = '0s';
+                    oText.style.transitionDuration = '0s';
+                    data.oUl.children[5].className = 'core';
+                    data.oUl.style.left = '-577px';
+                    data.oUl.children[1].className = '';
+                    oUlLeft = parseInt(getComputedStyle(data.oUl).left);
+                    data.oUl.style.transitionDuration = '0.4s';
+                    oImg.style.transitionDuration = '0.4s';
+                    oText.style.transitionDuration = '0.4s';
+                    index = 5;
+                }else{
+                    oUlLeft = parseInt(getComputedStyle(data.oUl).left);
+                }
+                data.oUl.children[index].className = '';
+                data.oUl.children[--index].className = 'core';
+                data.oUl.style.left = oUlLeft + 134 + 'px'; 
+            }
+        }
+        this.data.timeId = setInterval(function(){
+            data.oBtn[1].click();
+        },5000)
+        function againTime(){
+            clearInterval($this.data.timeId);
+            $this.data.timeId = setInterval(function(){
+                data.oBtn[1].click();
+            },5000);
+        }
+        
+    }
 }
 
-// 获取sessionStorage里的分数排名数组
-function getStorage() {
-  const scoreArr = sessionStorage.getItem('scoreArr');
-  return scoreArr ? JSON.parse(scoreArr) : null;
+// 排行榜鼠标滑动切换效果
+var paihang_enter = function () {
+    var oBox = document.getElementById('youxuan'),
+        oUl = oBox.querySelectorAll('.paihang>.box>ul'),
+        oA = oBox.querySelectorAll('.paihang>.nav>a'),
+        index = 0;
+    for(var i = 0; i < oA.length; i++){
+        (function (i){
+            oA[i].onmouseenter = function () {
+                oA[index].classList.remove('enter');
+                oUl[index].classList.remove('visble');
+                oA[i].classList.add('enter');
+                oUl[i].classList.add('visble');
+                index = i;
+            }
+        }(i))
+    }
 }
 
-function getTime() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth().toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const seconds = date.getSeconds().toString().padStart(2, '0');
-  return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
+// 滚动条滚动事件
+var scroll_roll = {
+    data : {},
+    init : function () {
+        this.data = this.initData();
+        this.Event(this.data);
+    },
+    initData : function () {
+        var oForm = document.getElementById('search_top'),
+            oTopDiv = document.getElementById('fixed_search'),
+            oSideNav = document.getElementById('Side_nav'),
+            oUl = document.querySelector('header .topSearch-major .search>div>ul');
+        return {
+            oForm : oForm,
+            oTopDiv : oTopDiv,
+            oSideNav : oSideNav,
+            oUl : oUl
+        }
+    },
+    Event : function (data) {
+        var pageY,
+            arr = [],
+            oSideNavLi = data.oSideNav.children[0].children,
+            index = 0,
+            _this = this;
+        document.addEventListener('scroll',function(){
+            pageY = pageYOffset;
+            if(pageY > 260){
+                data.oForm.className = 'fixed_form';
+                data.oForm.style.top = '-52px';
+                data.oTopDiv.style.top = '-60px';
+                arr.push('a');
+                if(arr.length === 1){
+                    getComputedStyle(data.oForm).top;
+                }
+                data.oForm.style.transition = 'top .4s';
+                data.oUl.style.marginTop = '41px';
+            }else{
+                data.oForm.style.transitionDuration = '0';
+                data.oForm.className = '';
+                data.oUl.style.marginTop = '5px';
+            }
+            if(pageY > 550){
+                data.oForm.style.top = '8px';
+                data.oTopDiv.style.top = '0px';
+            }
+        },false)
+        document.addEventListener('scroll',function(){
+            if(pageY > 614){
+                data.oSideNav.style.transitionDuration = '0.3s';
+                getComputedStyle(data.oSideNav).top;
+                data.oSideNav.style.position = 'fixed';
+                data.oSideNav.style.top = '74px';
+                oSideNavLi[6].style.display = 'block';
+            }else{
+                data.oSideNav.style.transitionDuration = '0s';
+                getComputedStyle(data.oSideNav).top;
+                data.oSideNav.style.position = 'absolute';
+                data.oSideNav.style.top = '0px';
+                oSideNavLi[6].style.display = 'none';
+            }
+            if(pageY > 2930){
+                index && oSideNavLi[index].classList.remove('region');
+                oSideNavLi[3].classList.add('region');
+                index = 3;
+            }else if(pageY > 1900){
+                index && oSideNavLi[index].classList.remove('region');
+                oSideNavLi[2].classList.add('region');
+                index = 2;
+            }else if(pageY > 900){
+                index && oSideNavLi[index].classList.remove('region');
+                oSideNavLi[1].classList.add('region');
+                index = 1;
+            }else if(pageY > 614){
+                index && oSideNavLi[index].classList.remove('region');
+                oSideNavLi[0].classList.add('region');
+                index = '0';
+            }else{
+                oSideNavLi[0].classList.remove('region');
+            };
+        },false);
+        data.oSideNav.children[0].onclick = function (e) {
+            e = e || window.event;
+            var targetName = e.target.nodeName,
+                targetValue = e.target.getAttribute('value'),
+                pageY;
+                // console.log(targetName)
+            if (targetName == 'SPAN' || targetName == 'I'){
+                var lastPageY,
+                        num;
+                if(targetValue == '1'){
+                    clearInterval(_this.timeId);
+                    _this.timeId = setInterval(function(){timeFn(620)},10)
+                }else if(targetValue == '2'){
+                    clearInterval(_this.timeId);
+                    _this.timeId = setInterval(function(){timeFn(905)},10)
+                }else if(targetValue == '3'){
+                    clearInterval(_this.timeId);
+                    _this.timeId = setInterval(function(){timeFn(1905)},10)
+                }else if(targetValue == '4'){
+                    clearInterval(_this.timeId);
+                    _this.timeId = setInterval(function(){timeFn(2935)},10)
+                }else if(targetValue == '5'){
+                    clearInterval(_this.timeId);
+                    _this.timeId = setInterval(function(){timeFn(0)},10)
+                }
+                function timeFn(End){
+                    
+                    pageY = window.pageYOffset;
+                    num = (End - pageY) * 0.3;
+                    scrollBy(0,num);
+                    if(lastPageY == pageY) clearInterval(_this.timeId);
+                    lastPageY = pageY;
+                }
+            }
+        }
+    }
+}
+
+// 用jQuery和mock渲染轮播图区域左侧导航条内容区域
+function renderMenuContent(data){
+    var divLeft = $('<div class="menu-content-left"></div>'),
+        divRight = $('<div class="menu-content-right"></div>'),
+        tabs = $('<div class="tabs clearfix"></div>'),
+        subs = $('<div class="subs"></div>');
+    data.tabs.forEach(function (val){
+        $(`<a href="#" class="tabs_item">${val.name}
+                <i class="iconfont">&#xe7dc;</i>
+            </a>`).appendTo(tabs)
+    });
+    data.subs.forEach(function (val){
+        var dl = $('<dl></dl>');
+        $(`
+            <dd>${val.category}<i class="iconfont">&#xe7dc;</i></dd>
+        `).appendTo(dl);
+        var dt = $('<dt class="clearfix"></dt>');
+        val.items.forEach(function (val){
+            $(`<a href="${val.href}">${val.name}</a>`).appendTo(dt)
+        })
+        dl.append(dt).appendTo(subs);
+    })
+    divLeft.append(tabs).append(subs);
+    data.img.forEach(function(val){
+        $(`<img src="${val}">`).appendTo(divRight)
+    })
+    $('.menu-content').empty().append(divLeft).append(divRight);
 }
